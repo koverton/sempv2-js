@@ -1,0 +1,32 @@
+{
+  "name": "sempv2-js",
+  "version": "0.0.1",
+  "description": "Javascript SEMPv2 client for Solace management API",
+  "main": "index.js",
+  "dependencies": {
+    "swagger-client": "^3.0.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.3.0"
+  },
+  "scripts": {
+    "test": "mocha --reporter spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/koverton/sempv2-js.git"
+  },
+  "keywords": [
+    "javascript",
+    "SEMP",
+    "Solace",
+    "swagger"
+  ],
+  "author": "Ken Overton <ken.overton@gmail.com> (https://github.com/koverton)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/koverton/sempv2-js/issues"
+  },
+  "homepage": "https://github.com/koverton/sempv2-js#readme"
+}
