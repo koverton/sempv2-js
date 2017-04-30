@@ -81,7 +81,7 @@ This module uses the Mocha test framework and Chai assertion library for a
 > properly_.
 
 To setup for your testing, we assume you already have a Solace message router. 
-If not see (the [Solace Developers Portal](http://dev.solace.com/get-started/start-up-solace-messaging/)). 
+If not see the [Solace Developers Portal](http://dev.solace.com/get-started/start-up-solace-messaging/). 
 If you want to test this client against a router, modify the following variables 
 at the top of test/test.js:
 
