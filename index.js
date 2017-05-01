@@ -1,5 +1,5 @@
 var Swagger = require('swagger-client');
-var Helper  = require('Helper');
+var Helper  = require('./Helper');
 
 /**
  * Represents SempClient, ready to connect and issue SEMP queries
@@ -37,6 +37,7 @@ SempClient.prototype.urlBase = function(vpn) {
  **/
 /**
  * Retrieves Msg-VPN entity by name.
+ *
  * @param {string} vpn - Msg-VPN name
  * @returns {Object} Msg-VPN entity structure
  **/
