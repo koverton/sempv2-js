@@ -7,24 +7,13 @@ including:
 
 * Message-VPNs
 * Queues
+* Durable Topic Endpoints
 * Client Usernames
 * Client Profiles
 * ACL Profiles (partially, see TODO below)
 
 It is a dynamic library that converts all data transfers back and forth between 
 JSON and Javascript objects. It does not make use of any of Swagger code-generation.
-
-## TODO
-
-Since this is an initial version, it does not yet manage the following entity types:
-
-* Bridges
-* LDAP Authorization Groups
-* REST Delivery Points
-
-ACL-Profiles are more deeply-structured than most other entities including nested 
-entities for each of connect, publish and subscribe rules. Only basic create/delete 
-operations work at this time.
 
 ## Example Code
 
@@ -64,6 +53,30 @@ client.createMsgVpn(vpnname)
 	})
 	.catch( (err) => { console.log('ERR: ' + err); });
 ```
+
+There are more sample scripts in the `samples/` directory:
+* `samples/1-create-vpn.js`
+Sample script to create a basic message-VPN with all default settings.
+* `samples/2-get-vpn.js`
+Sample script to query an existing message-VPN entity.
+* `samples/3-create-modify-destroy-user.js`
+Sample script to create a queue, modify and update that queue on the server, then delete it from the server.
+* `samples/4-create-and-remove-multiple-dtes.js`
+Sample script to create two durable TopicEndpoints then use the bulk removal function to remove them all from a Msg-VPN.
+* `samples/5-teardown-vpn.js`
+Sample script to recursively delete a message-VPN and all it's configured entities.
+
+## TODO
+
+Since this is an initial version, it does not yet manage the following entity types:
+
+* Bridges
+* LDAP Authorization Groups
+* REST Delivery Points
+
+ACL-Profiles are more deeply-structured than most other entities including nested 
+entities for each of connect, publish and subscribe rules. Only basic create/delete 
+operations work at this time.
 
 ## Dependencies
 

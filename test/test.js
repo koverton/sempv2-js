@@ -14,6 +14,7 @@ const TESTPASS = 'c00k13s';
 
 const vpnname  = ranstring(30);
 const queuename= 'deleteme_q';
+const topicEndpointName='deleteme_dte';
 const aclname  = 'deleteme_acl';
 const cpname   = 'deleteme_cp';
 const username = 'deleteme_user';
@@ -59,14 +60,14 @@ describe('#SempClient.updateMsgVpn', function() {
 			.then( (vpn) => {
 				expect(vpn.data.msgVpnName).to.equal(vpnname);
 				expect(vpn.meta.responseCode).to.equal(200);
-				//console.log('Modifying existing Msg-VPN ' + vpnname);
 				vpn.data.maxMsgSpoolUsage = 123;
 				return sc.updateMsgVpn(vpnname, vpn.data);
 			})
 			.then( (vpn) => {
 				expect(vpn.ok).to.equal(true);
 			})
-			.catch( (err) => { prettyprint(err); });
+			//.catch( (err) => { prettyprint(err); })
+			;
 	});
 });
 
@@ -100,6 +101,42 @@ describe('#SempClient.updateQueue', function() {
 				//console.log('Modifying existing Queue ' + queuename);
 				queue.data.maxMsgSpoolUsage = 0;
 				return sc.updateQueue(vpnname, queue.data);
+			})
+			.then( (queue) => {
+				expect(queue.ok).to.equal(true);
+			});
+	});
+});
+
+describe('#SempClient.createTopicEndpoint', function() {
+	it('should create a valid topicEndpoint in a msgvpn by name', function() {
+		var sc = new semp.SempClient(TESTHOST, TESTUSER, TESTPASS);
+		return sc.createTopicEndpoint (vpnname, topicEndpointName)
+			.then( (topicEndpoint) => {
+				expect(topicEndpoint.body.data.topicEndpointName).to.equal(topicEndpointName);
+				expect(topicEndpoint.ok).to.equal(true);
+			});
+	});
+});
+describe('#SempClient.getTopicEndpoint', function() {
+	it('should retreive a valid topicEndpoint in a msgvpn by name', function() {
+		var sc = new semp.SempClient(TESTHOST, TESTUSER, TESTPASS);
+		return sc.getTopicEndpoint (vpnname, topicEndpointName)
+			.then( (topicEndpoint) => {
+				expect(topicEndpoint.data.topicEndpointName).to.equal(topicEndpointName);
+				expect(topicEndpoint.meta.responseCode).to.equal(200);
+			});
+	});
+});
+describe('#SempClient.updateTopicEndpoint', function() {
+	it('should successfully modify a valid TopicEndpoint in a msgvpn via HTTP PUT of a valid record', function() {
+		var sc = new semp.SempClient(TESTHOST, TESTUSER, TESTPASS);
+		return sc.getTopicEndpoint (vpnname, topicEndpointName)
+			.then( (topicEndpoint) => {
+				expect(topicEndpoint.data.topicEndpointName).to.equal(topicEndpointName);
+				expect(topicEndpoint.meta.responseCode).to.equal(200);
+				topicEndpoint.data.maxSpoolUsage = 0;
+				return sc.updateTopicEndpoint(vpnname, topicEndpoint.data);
 			})
 			.then( (queue) => {
 				expect(queue.ok).to.equal(true);

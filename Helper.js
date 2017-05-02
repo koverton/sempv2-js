@@ -44,7 +44,7 @@ var inferName = function(entity) {
 		return '';
 	}
 	var names = 
-		[ 'clientUsername', 'aclProfileName' , 'queueName', 'clientProfileName', 'msgVpnName', 'authorizationGroupName', 'bridgeName', 'restDeliveryPointName', 'remoteMsgVpnName', 'queueBindingName' ];
+		[ 'clientUsername', 'aclProfileName' , 'queueName', 'topicEndpointName', 'clientProfileName', 'msgVpnName', 'authorizationGroupName', 'bridgeName', 'restDeliveryPointName', 'remoteMsgVpnName', 'queueBindingName', ];
 	for(var i = 0; i < names.length; i++) {
 		if ( names[i] in entity ) {
 			return entity[ names[i] ];
@@ -82,7 +82,11 @@ var deleteObjectsRec = function (objects, delhdr, i) {
 	};
 	return Swagger.http(request)
 		.then( (res) => {
-			return deleteObjectsRec(objects, delhdr, i+1);
+			return deleteObjectsRec(objects, delhdr, i+1)
+				.then( (nestedres) => {
+					if (nestedres == null) return res;
+					else return nestedres;
+				});
 		});
 };
 

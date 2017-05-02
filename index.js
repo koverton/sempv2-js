@@ -80,6 +80,15 @@ SempClient.prototype.getClientUsername = function(vpn, clientUsername) {
 SempClient.prototype.getQueue = function(vpn, queue) {
 	return Helper.get(this._host, this._gethdr, vpn, 'queues/'+queue);
 }
+/**
+ * Retrieves TopicEndpoint entity by name per Msg-VPN.
+ * @param {string} vpn - Msg-VPN name
+ * @param {string} topicEndpoint - TopicEndpoint name
+ * @returns Swagger-client http response {Promise} with a TopicEndpoint entity {Object}
+ **/
+SempClient.prototype.getTopicEndpoint = function(vpn, topicEndpoint) {
+	return Helper.get(this._host, this._gethdr, vpn, 'topicEndpoints/'+topicEndpoint);
+}
 
 /** 
  * BULK ENTITY GETTERS
@@ -122,6 +131,14 @@ SempClient.prototype.getClientUsernames = function(vpn) {
  **/
 SempClient.prototype.getQueues = function(vpn) {
 	return Helper.get(this._host, this._gethdr, vpn, 'queues');
+}
+/**
+ * Retrieves all TopicEndpoint entities in a single Msg-VPN. 
+ * @param {string} vpn - Msg-VPN name
+ * @returns Swagger-client http response {Promise} with a result-set {Object} list of TopicEndpoint configs and links list of URL's per each entity.
+ **/
+SempClient.prototype.getTopicEndpoints = function(vpn) {
+	return Helper.get(this._host, this._gethdr, vpn, 'topicEndpoints');
 }
 
 /**
@@ -191,6 +208,17 @@ SempClient.prototype.createQueue = function (vpn, name) {
 			this.urlBase(vpn) + '/queues', 
 			{ queueName: name });
 }
+/**
+ * Creates a new TopicEndpoint entity with all default values in a named Msg-VPN.
+ * @param {string} vpn - Msg-VPN name
+ * @param {string} name - TopicEndpoint name
+ * @returns {Object} swagger result set including status and the full created object.
+ **/
+SempClient.prototype.createTopicEndpoint = function (vpn, name) {
+	return this.createObject(
+			this.urlBase(vpn) + '/topicEndpoints', 
+			{ topicEndpointName: name });
+}
 
 
 /**
@@ -207,15 +235,13 @@ SempClient.prototype.updateObject = function (url, obj) {
 	return Swagger.http(request);
 }
 /**
- * Update an existing Queue entity with contents of a local Queue object.
- * @param {string} vpn - Msg-VPN name
- * @param {Object} queue - Queue update object
+ * Update an existing Msg-VPN entity with contents of a local Msg-VPN object.
+ * @param {string} vpnname - Msg-VPN name
+ * @param {Object} vpn - Msg-VPN update object
  * @returns Swagger-client http response {Promise} result of the HTTP PUT operation.
  **/
-SempClient.prototype.updateQueue = function (vpn, queue) {
-	return this.updateObject(
-		this.urlBase(vpn)+'/queues/'+queue.queueName, 
-		queue);
+SempClient.prototype.updateMsgVpn = function (vpnname, vpn) {
+	return this.updateObject(this.urlBase(vpnname), vpn);
 }
 /**
  * Update an existing ACL-Profile entity with contents of a local ACL-Profile object.
@@ -250,6 +276,28 @@ SempClient.prototype.updateClientUsername = function (vpn, user) {
 		this.urlBase(vpn)+'/clientUsernames/'+user.clientUsername, 
 		user);
 }
+/**
+ * Update an existing Queue entity with contents of a local Queue object.
+ * @param {string} vpn - Msg-VPN name
+ * @param {Object} queue - Queue update object
+ * @returns Swagger-client http response {Promise} result of the HTTP PUT operation.
+ **/
+SempClient.prototype.updateQueue = function (vpn, queue) {
+	return this.updateObject(
+		this.urlBase(vpn)+'/queues/'+queue.queueName, 
+		queue);
+}
+/**
+ * Update an existing TopicEndpoint entity with contents of a local TopicEndpoint object.
+ * @param {string} vpn - Msg-VPN name
+ * @param {Object} topicEndpoint - TopicEndpoint update object
+ * @returns Swagger-client http response {Promise} result of the HTTP PUT operation.
+ **/
+SempClient.prototype.updateTopicEndpoint = function (vpn, topicEndpoint) {
+	return this.updateObject(
+		this.urlBase(vpn)+'/topicEndpoints/'+topicEndpoint.topicEndpointName, 
+		topicEndpoint);
+}
 
 
 /**
@@ -262,6 +310,8 @@ SempClient.prototype.updateClientUsername = function (vpn, user) {
 SempClient.prototype.deleteMsgVpnAndAllEntities = function (vpn) {
 	return this.deleteAllQueues(vpn)
 		.then( (x) => {
+			return this.deleteAllTopicEndpoints(vpn)
+		}).then( (x) => {
 			return this.deleteAllClientUsernames(vpn)
 		}).then( (x) => {
 			return this.deleteAllClientProfiles(vpn)
@@ -326,6 +376,15 @@ SempClient.prototype.deleteClientUsername = function (vpn, clientUsername) {
 SempClient.prototype.deleteQueue = function (vpn, queue) {
 	return this.deleteObject(vpn, 'queues', queue);
 }
+/**
+ * Delete an existing TopicEndpoint entity from the server's named Msg-VPN.
+ * @param {string} vpn - Msg-VPN name
+ * @param {string} topicEndpoint - TopicEndpoint name to be deleted
+ * @returns Swagger-client http response {Promise} result of the HTTP DELETE operation.
+ **/
+SempClient.prototype.deleteTopicEndpoint = function (vpn, topicEndpoint) {
+	return this.deleteObject(vpn, 'topicEndpoints', topicEndpoint);
+}
 
 
 /*
@@ -372,6 +431,17 @@ SempClient.prototype.deleteAllClientUsernames = function (vpn) {
  **/
 SempClient.prototype.deleteAllQueues = function (vpn) {
 	return this.getQueues(vpn)
+		.then( (objects) => {
+       			return Helper.deleteObjectsRec(objects, this._gethdr, 0);
+		});
+}
+/**
+ * Delete all existing TopicEndpoint entities from the server's named Msg-VPN. WARNING: DESTRUCTIVE; USE WITH CAUTION.
+ * @param {string} vpn - Msg-VPN name
+ * @returns Swagger-client http response {Promise} result of the HTTP DELETE operations.
+ **/
+SempClient.prototype.deleteAllTopicEndpoints = function (vpn) {
+	return this.getTopicEndpoints(vpn)
 		.then( (objects) => {
        			return Helper.deleteObjectsRec(objects, this._gethdr, 0);
 		});
