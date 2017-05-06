@@ -6,11 +6,11 @@ if (process.argv.length < 6) {
 	process.exit(1);
 }
 ***/
-const host = '192.168.56.151:8080' // process.argv[2];
-const user = 'admin' // process.argv[3];
-const pass = 'admin' // process.argv[4];
-const vpnname= 'jimmy_vpn' // process.argv[5];
-const aclname= 'acl1' // process.argv[6];
+const process.argv[2];
+const process.argv[3];
+const process.argv[4];
+const process.argv[5];
+const process.argv[6];
 
 
 var vmr = new semp.SempClient(host, user, pass);
