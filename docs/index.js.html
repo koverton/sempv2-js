@@ -108,6 +108,43 @@ SempClient.prototype.getClientUsername = function(vpn, clientUsername) {
 SempClient.prototype.getQueue = function(vpn, queue) {
 	return Helper.get(this._host, this._gethdr, vpn, 'queues/'+queue);
 }
+/**
+ * Retrieves TopicEndpoint entity by name per Msg-VPN.
+ * @param {string} vpn - Msg-VPN name
+ * @param {string} topicEndpoint - TopicEndpoint name
+ * @returns Swagger-client http response {Promise} with a TopicEndpoint entity {Object}
+ **/
+SempClient.prototype.getTopicEndpoint = function(vpn, topicEndpoint) {
+	return Helper.get(this._host, this._gethdr, vpn, 'topicEndpoints/'+topicEndpoint);
+}
+/**
+ * Retrieves the list of ACL-Profile client-connection exceptions ACL-Profile name per Msg-VPN.
+ * @param {string} vpn - Msg-VPN name
+ * @param {string} aclname - ACL-Profile name
+ * @returns Swagger-client http response {Promise} with a client-connection exception list entity {Object}
+ **/
+SempClient.prototype.getAclProfileConnectionExceptionsList = function(vpn, aclname) {
+	return Helper.get(this._host, this._gethdr, vpn, 'aclProfiles/'+aclname+'/clientConnectExceptions');
+}
+/**
+ * Retrieves the list of ACL-Profile subscribe exceptions ACL-Profile name per Msg-VPN.
+ * @param {string} vpn - Msg-VPN name
+ * @param {string} aclname - ACL-Profile name
+ * @returns Swagger-client http response {Promise} with a subscribe exception list entity {Object}
+ **/
+SempClient.prototype.getAclProfileSubscribeExceptionsList = function(vpn, aclname) {
+	return Helper.get(this._host, this._gethdr, vpn, 'aclProfiles/'+aclname+'/subscribeExceptions');
+}
+/**
+ * Retrieves the list of ACL-Profile publish exceptions ACL-Profile name per Msg-VPN.
+ * @param {string} vpn - Msg-VPN name
+ * @param {string} aclname - ACL-Profile name
+ * @returns Swagger-client http response {Promise} with a publish exception list entity {Object}
+ **/
+SempClient.prototype.getAclProfilePublishExceptionsList = function(vpn, aclname) {
+	return Helper.get(this._host, this._gethdr, vpn, 'aclProfiles/'+aclname+'/publishExceptions');
+}
+
 
 /** 
  * BULK ENTITY GETTERS
@@ -150,6 +187,14 @@ SempClient.prototype.getClientUsernames = function(vpn) {
  **/
 SempClient.prototype.getQueues = function(vpn) {
 	return Helper.get(this._host, this._gethdr, vpn, 'queues');
+}
+/**
+ * Retrieves all TopicEndpoint entities in a single Msg-VPN. 
+ * @param {string} vpn - Msg-VPN name
+ * @returns Swagger-client http response {Promise} with a result-set {Object} list of TopicEndpoint configs and links list of URL's per each entity.
+ **/
+SempClient.prototype.getTopicEndpoints = function(vpn) {
+	return Helper.get(this._host, this._gethdr, vpn, 'topicEndpoints');
 }
 
 /**
@@ -219,6 +264,17 @@ SempClient.prototype.createQueue = function (vpn, name) {
 			this.urlBase(vpn) + '/queues', 
 			{ queueName: name });
 }
+/**
+ * Creates a new TopicEndpoint entity with all default values in a named Msg-VPN.
+ * @param {string} vpn - Msg-VPN name
+ * @param {string} name - TopicEndpoint name
+ * @returns {Object} swagger result set including status and the full created object.
+ **/
+SempClient.prototype.createTopicEndpoint = function (vpn, name) {
+	return this.createObject(
+			this.urlBase(vpn) + '/topicEndpoints', 
+			{ topicEndpointName: name });
+}
 
 
 /**
@@ -235,15 +291,13 @@ SempClient.prototype.updateObject = function (url, obj) {
 	return Swagger.http(request);
 }
 /**
- * Update an existing Queue entity with contents of a local Queue object.
- * @param {string} vpn - Msg-VPN name
- * @param {Object} queue - Queue update object
+ * Update an existing Msg-VPN entity with contents of a local Msg-VPN object.
+ * @param {string} vpnname - Msg-VPN name
+ * @param {Object} vpn - Msg-VPN update object
  * @returns Swagger-client http response {Promise} result of the HTTP PUT operation.
  **/
-SempClient.prototype.updateQueue = function (vpn, queue) {
-	return this.updateObject(
-		this.urlBase(vpn)+'/queues/'+queue.queueName, 
-		queue);
+SempClient.prototype.updateMsgVpn = function (vpnname, vpn) {
+	return this.updateObject(this.urlBase(vpnname), vpn);
 }
 /**
  * Update an existing ACL-Profile entity with contents of a local ACL-Profile object.
@@ -278,6 +332,58 @@ SempClient.prototype.updateClientUsername = function (vpn, user) {
 		this.urlBase(vpn)+'/clientUsernames/'+user.clientUsername, 
 		user);
 }
+/**
+ * Update an existing Queue entity with contents of a local Queue object.
+ * @param {string} vpn - Msg-VPN name
+ * @param {Object} queue - Queue update object
+ * @returns Swagger-client http response {Promise} result of the HTTP PUT operation.
+ **/
+SempClient.prototype.updateQueue = function (vpn, queue) {
+	return this.updateObject(
+		this.urlBase(vpn)+'/queues/'+queue.queueName, 
+		queue);
+}
+/**
+ * Update an existing TopicEndpoint entity with contents of a local TopicEndpoint object.
+ * @param {string} vpn - Msg-VPN name
+ * @param {Object} topicEndpoint - TopicEndpoint update object
+ * @returns Swagger-client http response {Promise} result of the HTTP PUT operation.
+ **/
+SempClient.prototype.updateTopicEndpoint = function (vpn, topicEndpoint) {
+	return this.updateObject(
+		this.urlBase(vpn)+'/topicEndpoints/'+topicEndpoint.topicEndpointName, 
+		topicEndpoint);
+}
+/**
+ * Update an existing ACL-Profile client-connection exception list with new items.
+ * @param {string} vpn - Msg-VPN name
+ * @param {Object} exlist - the list of exceptions to add
+ * @returns Swagger-client http response {Promise} result of the HTTP operation.
+ **/
+SempClient.prototype.updateAclProfileConnectionExceptionsList = function (vpn, exlist) {
+	var url = this.urlBase(vpn)+'/aclProfiles/'+exlist[0].aclProfileName+'/clientConnectExceptions';
+	return Helper.recursiveHttpRequest( url, this._posthdr, 'POST', exlist, 0 );
+}
+/**
+ * Update an existing ACL-Profile subscribe exception list with new items.
+ * @param {string} vpn - Msg-VPN name
+ * @param {Object} exlist - the list of exceptions to add
+ * @returns Swagger-client http response {Promise} result of the HTTP operation.
+ **/
+SempClient.prototype.updateAclProfileSubscribeExceptionsList = function (vpn, exlist) {
+	var url = this.urlBase(vpn)+'/aclProfiles/'+exlist[0].aclProfileName+'/subscribeExceptions';
+	return Helper.recursiveHttpRequest( url, this._posthdr, 'POST', exlist, 0 );
+}
+/**
+ * Update an existing ACL-Profile publish exception list with new items.
+ * @param {string} vpn - Msg-VPN name
+ * @param {Object} exlist - the list of exceptions to add
+ * @returns Swagger-client http response {Promise} result of the HTTP operation.
+ **/
+SempClient.prototype.updateAclProfilePublishExceptionsList = function (vpn, exlist) {
+	var url = this.urlBase(vpn)+'/aclProfiles/'+exlist[0].aclProfileName+'/publishExceptions';
+	return Helper.recursiveHttpRequest( url, this._posthdr, 'POST', exlist, 0 );
+}
 
 
 /**
@@ -290,6 +396,8 @@ SempClient.prototype.updateClientUsername = function (vpn, user) {
 SempClient.prototype.deleteMsgVpnAndAllEntities = function (vpn) {
 	return this.deleteAllQueues(vpn)
 		.then( (x) => {
+			return this.deleteAllTopicEndpoints(vpn)
+		}).then( (x) => {
 			return this.deleteAllClientUsernames(vpn)
 		}).then( (x) => {
 			return this.deleteAllClientProfiles(vpn)
@@ -328,6 +436,37 @@ SempClient.prototype.deleteAclProfile = function (vpn, aclProfile) {
 	return this.deleteObject(vpn, 'aclProfiles', aclProfile);
 }
 /**
+ * Delete an existing client-connect exception in an ACL-Profile entity from the server's named Msg-VPN.
+ * @param {string} vpn - Msg-VPN name
+ * @param {Object} exc - exception Object to be deleted
+ * @returns Swagger-client http response {Promise} result of the HTTP DELETE operation.
+ **/
+SempClient.prototype.deleteAclProfileClientConnectException = function (vpn, exc) {
+	return this.deleteObject(vpn, 'aclProfiles', 
+		exc.aclProfileName+'/clientConnectExceptions/'+encodeURIComponent(exc.clientConnectExceptionAddress));
+}
+/**
+ * Delete an existing publish exception in an ACL-Profile entity from the server's named Msg-VPN.
+ * @param {string} vpn - Msg-VPN name
+ * @param {Object} exc - exception Object to be deleted
+ * @returns Swagger-client http response {Promise} result of the HTTP DELETE operation.
+ **/
+SempClient.prototype.deleteAclProfilePublishException = function (vpn, exc) {
+	return this.deleteObject(vpn, 'aclProfiles', 
+		exc.aclProfileName+'/publishExceptions/'+exc.topicSyntax+','+encodeURIComponent(exc.publishExceptionTopic));
+}
+/**
+ * Delete an existing subscribe exception in an ACL-Profile entity from the server's named Msg-VPN.
+ * @param {string} vpn - Msg-VPN name
+ * @param {Object} exc - exception Object to be deleted
+ * @returns Swagger-client http response {Promise} result of the HTTP DELETE operation.
+ **/
+SempClient.prototype.deleteAclProfileSubscribeException = function (vpn, exc) {
+	return this.deleteObject(vpn, 'aclProfiles', 
+		exc.aclProfileName+'/subscribeExceptions/'+exc.topicSyntax+','+encodeURIComponent(exc.subscribeExceptionTopic));
+}
+
+/**
  * Delete an existing Client-Profile entity from the server's named Msg-VPN.
  * @param {string} vpn - Msg-VPN name
  * @param {string} clientProfile - Client-Profile name to be deleted
@@ -353,6 +492,15 @@ SempClient.prototype.deleteClientUsername = function (vpn, clientUsername) {
  **/
 SempClient.prototype.deleteQueue = function (vpn, queue) {
 	return this.deleteObject(vpn, 'queues', queue);
+}
+/**
+ * Delete an existing TopicEndpoint entity from the server's named Msg-VPN.
+ * @param {string} vpn - Msg-VPN name
+ * @param {string} topicEndpoint - TopicEndpoint name to be deleted
+ * @returns Swagger-client http response {Promise} result of the HTTP DELETE operation.
+ **/
+SempClient.prototype.deleteTopicEndpoint = function (vpn, topicEndpoint) {
+	return this.deleteObject(vpn, 'topicEndpoints', topicEndpoint);
 }
 
 
@@ -404,6 +552,17 @@ SempClient.prototype.deleteAllQueues = function (vpn) {
        			return Helper.deleteObjectsRec(objects, this._gethdr, 0);
 		});
 }
+/**
+ * Delete all existing TopicEndpoint entities from the server's named Msg-VPN. WARNING: DESTRUCTIVE; USE WITH CAUTION.
+ * @param {string} vpn - Msg-VPN name
+ * @returns Swagger-client http response {Promise} result of the HTTP DELETE operations.
+ **/
+SempClient.prototype.deleteAllTopicEndpoints = function (vpn) {
+	return this.getTopicEndpoints(vpn)
+		.then( (objects) => {
+       			return Helper.deleteObjectsRec(objects, this._gethdr, 0);
+		});
+}
 
 
 /*******************************************************************
@@ -423,13 +582,13 @@ module.exports =
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="SempClient.html">SempClient</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="SempClient.html">SempClient</a></li></ul><h3>Global</h3><ul><li><a href="global.html#deleteObjectsRec">deleteObjectsRec</a></li><li><a href="global.html#get">get</a></li><li><a href="global.html#inferName">inferName</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Mon May 01 2017 16:29:22 GMT-0400 (EDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Fri May 05 2017 22:22:52 GMT-0400 (EDT)
 </footer>
 
 <script> prettyPrint(); </script>

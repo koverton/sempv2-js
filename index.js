@@ -89,6 +89,34 @@ SempClient.prototype.getQueue = function(vpn, queue) {
 SempClient.prototype.getTopicEndpoint = function(vpn, topicEndpoint) {
 	return Helper.get(this._host, this._gethdr, vpn, 'topicEndpoints/'+topicEndpoint);
 }
+/**
+ * Retrieves the list of ACL-Profile client-connection exceptions ACL-Profile name per Msg-VPN.
+ * @param {string} vpn - Msg-VPN name
+ * @param {string} aclname - ACL-Profile name
+ * @returns Swagger-client http response {Promise} with a client-connection exception list entity {Object}
+ **/
+SempClient.prototype.getAclProfileConnectionExceptionsList = function(vpn, aclname) {
+	return Helper.get(this._host, this._gethdr, vpn, 'aclProfiles/'+aclname+'/clientConnectExceptions');
+}
+/**
+ * Retrieves the list of ACL-Profile subscribe exceptions ACL-Profile name per Msg-VPN.
+ * @param {string} vpn - Msg-VPN name
+ * @param {string} aclname - ACL-Profile name
+ * @returns Swagger-client http response {Promise} with a subscribe exception list entity {Object}
+ **/
+SempClient.prototype.getAclProfileSubscribeExceptionsList = function(vpn, aclname) {
+	return Helper.get(this._host, this._gethdr, vpn, 'aclProfiles/'+aclname+'/subscribeExceptions');
+}
+/**
+ * Retrieves the list of ACL-Profile publish exceptions ACL-Profile name per Msg-VPN.
+ * @param {string} vpn - Msg-VPN name
+ * @param {string} aclname - ACL-Profile name
+ * @returns Swagger-client http response {Promise} with a publish exception list entity {Object}
+ **/
+SempClient.prototype.getAclProfilePublishExceptionsList = function(vpn, aclname) {
+	return Helper.get(this._host, this._gethdr, vpn, 'aclProfiles/'+aclname+'/publishExceptions');
+}
+
 
 /** 
  * BULK ENTITY GETTERS
@@ -298,6 +326,36 @@ SempClient.prototype.updateTopicEndpoint = function (vpn, topicEndpoint) {
 		this.urlBase(vpn)+'/topicEndpoints/'+topicEndpoint.topicEndpointName, 
 		topicEndpoint);
 }
+/**
+ * Update an existing ACL-Profile client-connection exception list with new items.
+ * @param {string} vpn - Msg-VPN name
+ * @param {Object} exlist - the list of exceptions to add
+ * @returns Swagger-client http response {Promise} result of the HTTP operation.
+ **/
+SempClient.prototype.updateAclProfileConnectionExceptionsList = function (vpn, exlist) {
+	var url = this.urlBase(vpn)+'/aclProfiles/'+exlist[0].aclProfileName+'/clientConnectExceptions';
+	return Helper.recursiveHttpRequest( url, this._posthdr, 'POST', exlist, 0 );
+}
+/**
+ * Update an existing ACL-Profile subscribe exception list with new items.
+ * @param {string} vpn - Msg-VPN name
+ * @param {Object} exlist - the list of exceptions to add
+ * @returns Swagger-client http response {Promise} result of the HTTP operation.
+ **/
+SempClient.prototype.updateAclProfileSubscribeExceptionsList = function (vpn, exlist) {
+	var url = this.urlBase(vpn)+'/aclProfiles/'+exlist[0].aclProfileName+'/subscribeExceptions';
+	return Helper.recursiveHttpRequest( url, this._posthdr, 'POST', exlist, 0 );
+}
+/**
+ * Update an existing ACL-Profile publish exception list with new items.
+ * @param {string} vpn - Msg-VPN name
+ * @param {Object} exlist - the list of exceptions to add
+ * @returns Swagger-client http response {Promise} result of the HTTP operation.
+ **/
+SempClient.prototype.updateAclProfilePublishExceptionsList = function (vpn, exlist) {
+	var url = this.urlBase(vpn)+'/aclProfiles/'+exlist[0].aclProfileName+'/publishExceptions';
+	return Helper.recursiveHttpRequest( url, this._posthdr, 'POST', exlist, 0 );
+}
 
 
 /**
@@ -349,6 +407,37 @@ SempClient.prototype.deleteObject = function (vpn, objtype, objname) {
 SempClient.prototype.deleteAclProfile = function (vpn, aclProfile) {
 	return this.deleteObject(vpn, 'aclProfiles', aclProfile);
 }
+/**
+ * Delete an existing client-connect exception in an ACL-Profile entity from the server's named Msg-VPN.
+ * @param {string} vpn - Msg-VPN name
+ * @param {Object} exc - exception Object to be deleted
+ * @returns Swagger-client http response {Promise} result of the HTTP DELETE operation.
+ **/
+SempClient.prototype.deleteAclProfileClientConnectException = function (vpn, exc) {
+	return this.deleteObject(vpn, 'aclProfiles', 
+		exc.aclProfileName+'/clientConnectExceptions/'+encodeURIComponent(exc.clientConnectExceptionAddress));
+}
+/**
+ * Delete an existing publish exception in an ACL-Profile entity from the server's named Msg-VPN.
+ * @param {string} vpn - Msg-VPN name
+ * @param {Object} exc - exception Object to be deleted
+ * @returns Swagger-client http response {Promise} result of the HTTP DELETE operation.
+ **/
+SempClient.prototype.deleteAclProfilePublishException = function (vpn, exc) {
+	return this.deleteObject(vpn, 'aclProfiles', 
+		exc.aclProfileName+'/publishExceptions/'+exc.topicSyntax+','+encodeURIComponent(exc.publishExceptionTopic));
+}
+/**
+ * Delete an existing subscribe exception in an ACL-Profile entity from the server's named Msg-VPN.
+ * @param {string} vpn - Msg-VPN name
+ * @param {Object} exc - exception Object to be deleted
+ * @returns Swagger-client http response {Promise} result of the HTTP DELETE operation.
+ **/
+SempClient.prototype.deleteAclProfileSubscribeException = function (vpn, exc) {
+	return this.deleteObject(vpn, 'aclProfiles', 
+		exc.aclProfileName+'/subscribeExceptions/'+exc.topicSyntax+','+encodeURIComponent(exc.subscribeExceptionTopic));
+}
+
 /**
  * Delete an existing Client-Profile entity from the server's named Msg-VPN.
  * @param {string} vpn - Msg-VPN name

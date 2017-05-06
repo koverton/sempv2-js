@@ -164,24 +164,27 @@ describe('#SempClient.getAclProfile', function() {
 			});
 	});
 });
-/**
 describe('#SempClient.updateAclProfile', function() {
 	it('should successfully modify a valid ACL-Profile in a msgvpn via HTTP PUT of a valid record', function() {
 		var sc = new semp.SempClient(TESTHOST, TESTUSER, TESTPASS);
-		return sc.getAclProfile (vpnname, aclname)
-			.then( (acl) => {
-				expect(acl.data.aclProfileName).to.equal(aclname);
-				expect(acl.meta.responseCode).to.equal(200);
-				//console.log('Modifying existing ACL-profile ' + aclname);
-				acl.data.clientConnectDefaultAction = 'deny';
-				return sc.updateClientProfile(vpnname, acl.data);
-			})
-			.then( (acl) => {
-				expect(acl.ok).to.equal(true);
+		var exlist = [
+		{
+			'aclProfileName': aclname, 
+			'msgVpnName': vpnname,
+			'clientConnectExceptionAddress': '1.1.1.1/24'
+		},
+		{
+			'aclProfileName': aclname, 
+			'msgVpnName': vpnname,
+			'clientConnectExceptionAddress': '2.2.2.2/24'
+		}];
+		return sc.updateAclProfileConnectionExceptionsList(vpnname, exlist)
+			.then( (exc) => {
+				expect(exc.ok).to.equal(true);
+				expect(exc.body.data.clientConnectExceptionAddress).to.equal('2.2.2.2/24');
 			});
 	});
 });
-**/
 
 describe('#SempClient.createClientProfile', function() {
 	it('should create a valid client-profile in a msgvpn by name', function() {

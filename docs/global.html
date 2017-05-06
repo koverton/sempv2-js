@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Global</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Global</h1>
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2></h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+        
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id="deleteObjectsRec"><span class="type-signature"></span>deleteObjectsRec<span class="signature">(list, list, integer)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Recursively descends an object deleting all associated entities.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>list</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">objects</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">of objects in a format returned from a Swagger GET query.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>list</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">delhdr</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">of HTTP headers for the DELETE operation; if AUTH is needed those headers should be part of this object.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>integer</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">i</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">index of the item in the objects map to be deleted. Will be incremented on each call.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Helper.js.html">Helper.js</a>, <a href="Helper.js.html#line65">line 65</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    a resolved Promise after the last delete completes.
+</div>
+
+
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="get"><span class="type-signature"></span>get<span class="signature">(host, all, message-VPN, entity)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    General http GET over javascript objects
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>host</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">host</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">name or address in form 'host:port'</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>all</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">gethdr</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">HTTP headers for the GET request; if AUTH is needed you must add them to this object.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>message-VPN</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">vpn</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">name as a string.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>entity</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">entity</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">string, e.g. 'clientUsernames', 'aclProfiles', 'clientProfiles', etc.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Helper.js.html">Helper.js</a>, <a href="Helper.js.html#line17">line 17</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    Promise resulting from Swagger.http() call.
+</div>
+
+
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="inferName"><span class="type-signature"></span>inferName<span class="signature">(object)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Different entities have different fieldnames for their 'name' identifier; 
+this function tries to pull the name out of any possible entity w/o
+caring which type of entity that is.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>object</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">entity</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">to infer name from; different object types have differently-named name fields.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Helper.js.html">Helper.js</a>, <a href="Helper.js.html#line41">line 41</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    the name of the object as a string.
+</div>
+
+
+
+    
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="SempClient.html">SempClient</a></li></ul><h3>Global</h3><ul><li><a href="global.html#deleteObjectsRec">deleteObjectsRec</a></li><li><a href="global.html#get">get</a></li><li><a href="global.html#inferName">inferName</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Fri May 05 2017 22:22:52 GMT-0400 (EDT)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
