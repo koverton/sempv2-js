@@ -1,6 +1,6 @@
 {
   "name": "sempv2-js",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Javascript SEMPv2 client for Solace management API",
   "main": "index.js",
   "dependencies": {

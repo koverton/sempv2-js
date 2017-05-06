@@ -1,0 +1,476 @@
+{
+  "http://192.168.56.151:8080/SEMP/v2/config/msgVpns/jimmy_vpn": {
+    "authenticationBasicEnabled": true,
+    "authenticationBasicProfileName": "default",
+    "authenticationBasicRadiusDomain": "",
+    "authenticationBasicType": "radius",
+    "authenticationClientCertAllowApiProvidedUsernameEnabled": false,
+    "authenticationClientCertEnabled": false,
+    "authenticationClientCertMaxChainDepth": 3,
+    "authenticationClientCertValidateDateEnabled": true,
+    "authenticationKerberosAllowApiProvidedUsernameEnabled": false,
+    "authenticationKerberosEnabled": false,
+    "authorizationLdapGroupMembershipAttributeName": "memberOf",
+    "authorizationType": "internal",
+    "bridgingTlsServerCertEnforceTrustedCommonNameEnabled": true,
+    "bridgingTlsServerCertMaxChainDepth": 3,
+    "bridgingTlsServerCertValidateDateEnabled": true,
+    "distributedCacheManagementEnabled": true,
+    "enabled": false,
+    "eventConnectionCountThreshold": {
+      "clearPercent": 60,
+      "setPercent": 80
+    },
+    "eventEgressFlowCountThreshold": {
+      "clearPercent": 60,
+      "setPercent": 80
+    },
+    "eventEgressMsgRateThreshold": {
+      "clearValue": 3000000,
+      "setValue": 4000000
+    },
+    "eventEndpointCountThreshold": {
+      "clearPercent": 60,
+      "setPercent": 80
+    },
+    "eventIngressFlowCountThreshold": {
+      "clearPercent": 60,
+      "setPercent": 80
+    },
+    "eventIngressMsgRateThreshold": {
+      "clearValue": 3000000,
+      "setValue": 4000000
+    },
+    "eventLargeMsgThreshold": 1024,
+    "eventMsgSpoolUsageThreshold": {
+      "clearPercent": 60,
+      "setPercent": 80
+    },
+    "eventPublishClientEnabled": false,
+    "eventPublishMsgVpnEnabled": false,
+    "eventPublishSubscriptionMode": "off",
+    "eventPublishTopicFormatMqttEnabled": false,
+    "eventPublishTopicFormatSmfEnabled": true,
+    "eventServiceMqttConnectionCountThreshold": {
+      "clearPercent": 60,
+      "setPercent": 80
+    },
+    "eventServiceRestIncomingConnectionCountThreshold": {
+      "clearPercent": 60,
+      "setPercent": 80
+    },
+    "eventServiceSmfConnectionCountThreshold": {
+      "clearPercent": 60,
+      "setPercent": 80
+    },
+    "eventServiceWebConnectionCountThreshold": {
+      "clearPercent": 60,
+      "setPercent": 80
+    },
+    "eventSubscriptionCountThreshold": {
+      "clearPercent": 60,
+      "setPercent": 80
+    },
+    "eventTransactedSessionCountThreshold": {
+      "clearPercent": 60,
+      "setPercent": 80
+    },
+    "eventTransactionCountThreshold": {
+      "clearPercent": 60,
+      "setPercent": 80
+    },
+    "exportSubscriptionsEnabled": false,
+    "maxConnectionCount": 1000,
+    "maxEgressFlowCount": 1000,
+    "maxEndpointCount": 1000,
+    "maxIngressFlowCount": 1000,
+    "maxMsgSpoolUsage": 0,
+    "maxSubscriptionCount": 500000,
+    "maxTransactedSessionCount": 1000,
+    "maxTransactionCount": 5000,
+    "msgVpnName": "jimmy_vpn",
+    "replicationAckPropagationIntervalMsgCount": 20,
+    "replicationBridgeAuthenticationScheme": "basic",
+    "replicationBridgeCompressedDataEnabled": false,
+    "replicationBridgeEgressFlowWindowSize": 255,
+    "replicationBridgeRetryDelay": 3,
+    "replicationBridgeTlsEnabled": false,
+    "replicationBridgeUnidirectionalClientProfileName": "#client-profile",
+    "replicationEnabled": false,
+    "replicationQueueMaxMsgSpoolUsage": 60000,
+    "replicationQueueRejectMsgToSenderOnDiscardEnabled": true,
+    "replicationRejectMsgWhenSyncIneligibleEnabled": false,
+    "replicationRole": "standby",
+    "replicationTransactionMode": "async",
+    "restTlsServerCertEnforceTrustedCommonNameEnabled": true,
+    "restTlsServerCertMaxChainDepth": 3,
+    "restTlsServerCertValidateDateEnabled": true,
+    "sempOverMsgBusAdminClientEnabled": false,
+    "sempOverMsgBusAdminDistributedCacheEnabled": false,
+    "sempOverMsgBusAdminEnabled": false,
+    "sempOverMsgBusEnabled": true,
+    "sempOverMsgBusLegacyShowClearEnabled": false,
+    "sempOverMsgBusShowEnabled": false,
+    "serviceMqttMaxConnectionCount": 1000,
+    "serviceMqttPlainTextEnabled": false,
+    "serviceMqttTlsEnabled": false,
+    "serviceMqttTlsWebSocketEnabled": false,
+    "serviceMqttWebSocketEnabled": false,
+    "serviceRestIncomingMaxConnectionCount": 1000,
+    "serviceRestIncomingPlainTextEnabled": false,
+    "serviceRestIncomingTlsEnabled": false,
+    "serviceRestOutgoingMaxConnectionCount": 1000,
+    "serviceSmfMaxConnectionCount": 1000,
+    "serviceSmfPlainTextEnabled": true,
+    "serviceSmfTlsEnabled": true,
+    "serviceWebMaxConnectionCount": 1000,
+    "serviceWebPlainTextEnabled": true,
+    "serviceWebTlsEnabled": true,
+    "tlsAllowDowngradeToPlainTextEnabled": false
+  },
+  "http://192.168.56.151:8080/SEMP/v2/config/msgVpns/jimmy_vpn/aclProfiles/%23acl-profile": {
+    "aclProfileName": "#acl-profile",
+    "clientConnectDefaultAction": "allow",
+    "msgVpnName": "jimmy_vpn",
+    "publishTopicDefaultAction": "allow",
+    "subscribeTopicDefaultAction": "allow"
+  },
+  "http://192.168.56.151:8080/SEMP/v2/config/msgVpns/jimmy_vpn/aclProfiles/acl1": {
+    "aclProfileName": "acl1",
+    "clientConnectDefaultAction": "disallow",
+    "msgVpnName": "jimmy_vpn",
+    "publishTopicDefaultAction": "disallow",
+    "subscribeTopicDefaultAction": "disallow"
+  },
+  "http://192.168.56.151:8080/SEMP/v2/config/msgVpns/jimmy_vpn/aclProfiles/default": {
+    "aclProfileName": "default",
+    "clientConnectDefaultAction": "allow",
+    "msgVpnName": "jimmy_vpn",
+    "publishTopicDefaultAction": "allow",
+    "subscribeTopicDefaultAction": "allow"
+  },
+  "http://192.168.56.151:8080/SEMP/v2/config/msgVpns/jimmy_vpn/clientProfiles/%23client-profile": {
+    "allowBridgeConnectionsEnabled": false,
+    "allowCutThroughForwardingEnabled": false,
+    "allowGuaranteedEndpointCreateEnabled": false,
+    "allowGuaranteedMsgReceiveEnabled": false,
+    "allowGuaranteedMsgSendEnabled": false,
+    "allowTransactedSessionsEnabled": false,
+    "clientProfileName": "#client-profile",
+    "elidingDelay": 0,
+    "elidingEnabled": false,
+    "elidingMaxTopicCount": 256,
+    "eventClientProvisionedEndpointSpoolUsageThreshold": {
+      "clearPercent": 60,
+      "setPercent": 80
+    },
+    "eventConnectionCountPerClientUsernameThreshold": {
+      "clearPercent": 60,
+      "setPercent": 80
+    },
+    "eventEgressFlowCountThreshold": {
+      "clearPercent": 60,
+      "setPercent": 80
+    },
+    "eventEndpointCountPerClientUsernameThreshold": {
+      "clearPercent": 60,
+      "setPercent": 80
+    },
+    "eventIngressFlowCountThreshold": {
+      "clearPercent": 60,
+      "setPercent": 80
+    },
+    "eventServiceSmfConnectionCountPerClientUsernameThreshold": {
+      "clearPercent": 60,
+      "setPercent": 80
+    },
+    "eventServiceWebConnectionCountPerClientUsernameThreshold": {
+      "clearPercent": 60,
+      "setPercent": 80
+    },
+    "eventSubscriptionCountThreshold": {
+      "clearPercent": 60,
+      "setPercent": 80
+    },
+    "eventTransactedSessionCountThreshold": {
+      "clearPercent": 60,
+      "setPercent": 80
+    },
+    "eventTransactionCountThreshold": {
+      "clearPercent": 60,
+      "setPercent": 80
+    },
+    "maxConnectionCountPerClientUsername": 1000,
+    "maxEgressFlowCount": 1000,
+    "maxEndpointCountPerClientUsername": 1000,
+    "maxIngressFlowCount": 1000,
+    "maxSubscriptionCount": 500000,
+    "maxTransactedSessionCount": 10,
+    "maxTransactionCount": 5000,
+    "msgVpnName": "jimmy_vpn",
+    "queueControl1MaxDepth": 20000,
+    "queueControl1MinMsgBurst": 4,
+    "queueDirect1MaxDepth": 20000,
+    "queueDirect1MinMsgBurst": 4,
+    "queueDirect2MaxDepth": 20000,
+    "queueDirect2MinMsgBurst": 4,
+    "queueDirect3MaxDepth": 20000,
+    "queueDirect3MinMsgBurst": 4,
+    "queueGuaranteed1MaxDepth": 20000,
+    "queueGuaranteed1MinMsgBurst": 255,
+    "replicationAllowClientConnectWhenStandbyEnabled": true,
+    "serviceSmfMaxConnectionCountPerClientUsername": 1000,
+    "serviceWebInactiveTimeout": 30,
+    "serviceWebMaxConnectionCountPerClientUsername": 1000,
+    "serviceWebMaxPayload": 1000000,
+    "tcpCongestionWindowSize": 2,
+    "tcpKeepaliveCount": 5,
+    "tcpKeepaliveIdleTime": 3,
+    "tcpKeepaliveInterval": 1,
+    "tcpMaxSegmentSize": 1460,
+    "tcpMaxWindowSize": 256
+  },
+  "http://192.168.56.151:8080/SEMP/v2/config/msgVpns/jimmy_vpn/clientProfiles/default": {
+    "allowBridgeConnectionsEnabled": false,
+    "allowCutThroughForwardingEnabled": false,
+    "allowGuaranteedEndpointCreateEnabled": false,
+    "allowGuaranteedMsgReceiveEnabled": false,
+    "allowGuaranteedMsgSendEnabled": false,
+    "allowTransactedSessionsEnabled": false,
+    "clientProfileName": "default",
+    "elidingDelay": 0,
+    "elidingEnabled": false,
+    "elidingMaxTopicCount": 256,
+    "eventClientProvisionedEndpointSpoolUsageThreshold": {
+      "clearPercent": 60,
+      "setPercent": 80
+    },
+    "eventConnectionCountPerClientUsernameThreshold": {
+      "clearPercent": 60,
+      "setPercent": 80
+    },
+    "eventEgressFlowCountThreshold": {
+      "clearPercent": 60,
+      "setPercent": 80
+    },
+    "eventEndpointCountPerClientUsernameThreshold": {
+      "clearPercent": 60,
+      "setPercent": 80
+    },
+    "eventIngressFlowCountThreshold": {
+      "clearPercent": 60,
+      "setPercent": 80
+    },
+    "eventServiceSmfConnectionCountPerClientUsernameThreshold": {
+      "clearPercent": 60,
+      "setPercent": 80
+    },
+    "eventServiceWebConnectionCountPerClientUsernameThreshold": {
+      "clearPercent": 60,
+      "setPercent": 80
+    },
+    "eventSubscriptionCountThreshold": {
+      "clearPercent": 60,
+      "setPercent": 80
+    },
+    "eventTransactedSessionCountThreshold": {
+      "clearPercent": 60,
+      "setPercent": 80
+    },
+    "eventTransactionCountThreshold": {
+      "clearPercent": 60,
+      "setPercent": 80
+    },
+    "maxConnectionCountPerClientUsername": 1000,
+    "maxEgressFlowCount": 1000,
+    "maxEndpointCountPerClientUsername": 1000,
+    "maxIngressFlowCount": 1000,
+    "maxSubscriptionCount": 500000,
+    "maxTransactedSessionCount": 10,
+    "maxTransactionCount": 5000,
+    "msgVpnName": "jimmy_vpn",
+    "queueControl1MaxDepth": 20000,
+    "queueControl1MinMsgBurst": 4,
+    "queueDirect1MaxDepth": 20000,
+    "queueDirect1MinMsgBurst": 4,
+    "queueDirect2MaxDepth": 20000,
+    "queueDirect2MinMsgBurst": 4,
+    "queueDirect3MaxDepth": 20000,
+    "queueDirect3MinMsgBurst": 4,
+    "queueGuaranteed1MaxDepth": 20000,
+    "queueGuaranteed1MinMsgBurst": 255,
+    "replicationAllowClientConnectWhenStandbyEnabled": false,
+    "serviceSmfMaxConnectionCountPerClientUsername": 1000,
+    "serviceWebInactiveTimeout": 30,
+    "serviceWebMaxConnectionCountPerClientUsername": 1000,
+    "serviceWebMaxPayload": 1000000,
+    "tcpCongestionWindowSize": 2,
+    "tcpKeepaliveCount": 5,
+    "tcpKeepaliveIdleTime": 3,
+    "tcpKeepaliveInterval": 1,
+    "tcpMaxSegmentSize": 1460,
+    "tcpMaxWindowSize": 256
+  },
+  "http://192.168.56.151:8080/SEMP/v2/config/msgVpns/jimmy_vpn/clientProfiles/delete_this_cpname": {
+    "allowBridgeConnectionsEnabled": false,
+    "allowCutThroughForwardingEnabled": false,
+    "allowGuaranteedEndpointCreateEnabled": false,
+    "allowGuaranteedMsgReceiveEnabled": false,
+    "allowGuaranteedMsgSendEnabled": false,
+    "allowTransactedSessionsEnabled": false,
+    "clientProfileName": "delete_this_cpname",
+    "elidingDelay": 0,
+    "elidingEnabled": false,
+    "elidingMaxTopicCount": 256,
+    "eventClientProvisionedEndpointSpoolUsageThreshold": {
+      "clearPercent": 60,
+      "setPercent": 80
+    },
+    "eventConnectionCountPerClientUsernameThreshold": {
+      "clearPercent": 60,
+      "setPercent": 80
+    },
+    "eventEgressFlowCountThreshold": {
+      "clearPercent": 60,
+      "setPercent": 80
+    },
+    "eventEndpointCountPerClientUsernameThreshold": {
+      "clearPercent": 60,
+      "setPercent": 80
+    },
+    "eventIngressFlowCountThreshold": {
+      "clearPercent": 60,
+      "setPercent": 80
+    },
+    "eventServiceSmfConnectionCountPerClientUsernameThreshold": {
+      "clearPercent": 60,
+      "setPercent": 80
+    },
+    "eventServiceWebConnectionCountPerClientUsernameThreshold": {
+      "clearPercent": 60,
+      "setPercent": 80
+    },
+    "eventSubscriptionCountThreshold": {
+      "clearPercent": 60,
+      "setPercent": 80
+    },
+    "eventTransactedSessionCountThreshold": {
+      "clearPercent": 60,
+      "setPercent": 80
+    },
+    "eventTransactionCountThreshold": {
+      "clearPercent": 60,
+      "setPercent": 80
+    },
+    "maxConnectionCountPerClientUsername": 1000,
+    "maxEgressFlowCount": 1000,
+    "maxEndpointCountPerClientUsername": 1000,
+    "maxIngressFlowCount": 1000,
+    "maxSubscriptionCount": 500000,
+    "maxTransactedSessionCount": 10,
+    "maxTransactionCount": 5000,
+    "msgVpnName": "jimmy_vpn",
+    "queueControl1MaxDepth": 20000,
+    "queueControl1MinMsgBurst": 4,
+    "queueDirect1MaxDepth": 20000,
+    "queueDirect1MinMsgBurst": 4,
+    "queueDirect2MaxDepth": 20000,
+    "queueDirect2MinMsgBurst": 4,
+    "queueDirect3MaxDepth": 20000,
+    "queueDirect3MinMsgBurst": 4,
+    "queueGuaranteed1MaxDepth": 20000,
+    "queueGuaranteed1MinMsgBurst": 255,
+    "replicationAllowClientConnectWhenStandbyEnabled": false,
+    "serviceSmfMaxConnectionCountPerClientUsername": 1000,
+    "serviceWebInactiveTimeout": 30,
+    "serviceWebMaxConnectionCountPerClientUsername": 1000,
+    "serviceWebMaxPayload": 1000000,
+    "tcpCongestionWindowSize": 2,
+    "tcpKeepaliveCount": 5,
+    "tcpKeepaliveIdleTime": 3,
+    "tcpKeepaliveInterval": 1,
+    "tcpMaxSegmentSize": 1460,
+    "tcpMaxWindowSize": 256
+  },
+  "http://192.168.56.151:8080/SEMP/v2/config/msgVpns/jimmy_vpn/clientUsernames/%23client-username": {
+    "aclProfileName": "#acl-profile",
+    "clientProfileName": "#client-profile",
+    "clientUsername": "#client-username",
+    "enabled": true,
+    "guaranteedEndpointPermissionOverrideEnabled": false,
+    "msgVpnName": "jimmy_vpn",
+    "subscriptionManagerEnabled": false
+  },
+  "http://192.168.56.151:8080/SEMP/v2/config/msgVpns/jimmy_vpn/clientUsernames/default": {
+    "aclProfileName": "default",
+    "clientProfileName": "default",
+    "clientUsername": "default",
+    "enabled": false,
+    "guaranteedEndpointPermissionOverrideEnabled": false,
+    "msgVpnName": "jimmy_vpn",
+    "subscriptionManagerEnabled": false
+  },
+  "http://192.168.56.151:8080/SEMP/v2/config/msgVpns/jimmy_vpn/clientUsernames/delete_this_username": {
+    "aclProfileName": "default",
+    "clientProfileName": "delete_this_cpname",
+    "clientUsername": "delete_this_username",
+    "enabled": false,
+    "guaranteedEndpointPermissionOverrideEnabled": false,
+    "msgVpnName": "jimmy_vpn",
+    "subscriptionManagerEnabled": false
+  },
+  "http://192.168.56.151:8080/SEMP/v2/config/msgVpns/jimmy_vpn/queues/delete_this_queue": {
+    "accessType": "exclusive",
+    "consumerAckPropagationEnabled": true,
+    "egressEnabled": false,
+    "eventBindCountThreshold": {
+      "clearPercent": 60,
+      "setPercent": 80
+    },
+    "eventMsgSpoolUsageThreshold": {
+      "clearPercent": 60,
+      "setPercent": 80
+    },
+    "eventRejectLowPriorityMsgLimitThreshold": {
+      "clearPercent": 60,
+      "setPercent": 80
+    },
+    "ingressEnabled": false,
+    "maxBindCount": 1000,
+    "maxDeliveredUnackedMsgsPerFlow": 10000,
+    "maxMsgSize": 10000000,
+    "maxMsgSpoolUsage": 1500,
+    "maxRedeliveryCount": 0,
+    "maxTtl": 0,
+    "msgVpnName": "jimmy_vpn",
+    "owner": "",
+    "permission": "no-access",
+    "queueName": "delete_this_queue",
+    "rejectLowPriorityMsgEnabled": false,
+    "rejectLowPriorityMsgLimit": 0,
+    "rejectMsgToSenderOnDiscardBehavior": "when-queue-enabled",
+    "respectTtlEnabled": false
+  },
+  "http://192.168.56.151:8080/SEMP/v2/config/msgVpns/jimmy_vpn/aclProfiles/acl1/clientConnectExceptions/1.1.1.0%2F24": {
+    "aclProfileName": "acl1",
+    "clientConnectExceptionAddress": "1.1.1.0/24",
+    "msgVpnName": "jimmy_vpn"
+  },
+  "http://192.168.56.151:8080/SEMP/v2/config/msgVpns/jimmy_vpn/aclProfiles/acl1/clientConnectExceptions/2.2.2.0%2F24": {
+    "aclProfileName": "acl1",
+    "clientConnectExceptionAddress": "2.2.2.0/24",
+    "msgVpnName": "jimmy_vpn"
+  },
+  "http://192.168.56.151:8080/SEMP/v2/config/msgVpns/jimmy_vpn/aclProfiles/acl1/publishExceptions/smf,pub%2Fallow%2F%3E": {
+    "aclProfileName": "acl1",
+    "msgVpnName": "jimmy_vpn",
+    "publishExceptionTopic": "pub/allow/>",
+    "topicSyntax": "smf"
+  },
+  "http://192.168.56.151:8080/SEMP/v2/config/msgVpns/jimmy_vpn/aclProfiles/acl1/subscribeExceptions/smf,sub%2Fallow%2F%3E": {
+    "aclProfileName": "acl1",
+    "msgVpnName": "jimmy_vpn",
+    "subscribeExceptionTopic": "sub/allow/>",
+    "topicSyntax": "smf"
+  }
+}

@@ -12,7 +12,6 @@ const pass = 'admin' // process.argv[4];
 const vpnname= 'jimmy_vpn' // process.argv[5];
 const aclname= 'acl1' // process.argv[6];
 
-
 var vmr = new semp.SempClient(host, user, pass);
 
 console.log('Creating acl ' + aclname);

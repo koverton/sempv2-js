@@ -33,10 +33,19 @@ SempClient.prototype.urlBase = function(vpn) {
 }
 
 /**
+ * Formats a javascript object as an indented JSON string.
+ *
+ * @param {Object} obj -- the object to print on the console.
+ **/
+SempClient.prototype.prettyprint = function (obj) {
+	Helper.prettyprint(obj);
+}
+
+/**
  * INDIVIDUAL ENTITY GETTERS
  **/
 /**
- * Retrieves Msg-VPN entity by name.
+ * Retrieves Msg-VPN entity by name. Does not recurse dependent resources.
  *
  * @param {string} vpn - Msg-VPN name
  * @returns Swagger-client http response {Promise} with a Msg-VPN entity {Object}
@@ -45,7 +54,7 @@ SempClient.prototype.getMsgVpn = function(vpn) {
 	return Helper.get(this._host, this._gethdr, vpn, null);
 }
 /**
- * Retrieves ACL-Profile entity by name per Msg-VPN.
+ * Retrieves ACL-Profile entity by name per Msg-VPN. Does not recurse dependent resources.
  * @param {string} vpn - Msg-VPN name
  * @param {string} aclProfile - ACL-Profile name
  * @returns Swagger-client http response {Promise} with an ACL-Profile entity {Object}
@@ -122,14 +131,14 @@ SempClient.prototype.getAclProfilePublishExceptionsList = function(vpn, aclname)
  * BULK ENTITY GETTERS
  **/
 /**
- * Retrieves all Msg-VPN entities for this instance. 
+ * Retrieves all Msg-VPN entities for this instance. Does not recurse their dependent resources.
  * @returns Swagger-client http response {Promise} with a result-set {Object} list of Msg-VPN configs and links list of URL's per each entity.
  **/
 SempClient.prototype.getMsgVpns = function() {
 	return Helper.get(this._host, this._gethdr, null, null);
 }
 /**
- * Retrieves all ACL-Profile entities in a single Msg-VPN. 
+ * Retrieves all ACL-Profile entities in a single Msg-VPN. Does not recurse their dependent resources.
  * @param {string} vpn - Msg-VPN name
  * @returns Swagger-client http response {Promise} with a result-set {Object} list of ACL-Profile configs and links list of URL's per each entity.
  **/
@@ -358,33 +367,6 @@ SempClient.prototype.updateAclProfilePublishExceptionsList = function (vpn, exli
 }
 
 
-/**
- * WARNING: DESTRUCTIVE!! This is a recursive message-VPN delete method. 
- * Deletes a message-VPN after deleting all clients, profiles, queues configured in it.
- *
- * @param {string} vpn - message-VPN name as a string.
- * @returns swagger-client Promise resulting from the last HTTP delete request.
- **/
-SempClient.prototype.deleteMsgVpnAndAllEntities = function (vpn) {
-	return this.deleteAllQueues(vpn)
-		.then( (x) => {
-			return this.deleteAllTopicEndpoints(vpn)
-		}).then( (x) => {
-			return this.deleteAllClientUsernames(vpn)
-		}).then( (x) => {
-			return this.deleteAllClientProfiles(vpn)
-		}).then( (x) => {
-			return this.deleteAllAclProfiles(vpn)
-		}).then( (x) => {
-			const request = {
-				url    : this.urlBase(vpn),
-				method : 'DELETE',
-       				headers: this._gethdr
-			};
-			return Swagger.http(request);
-		});
-}
-
 
 /**
  * SINGLE ENTITY DELETE METHODS
@@ -437,7 +419,6 @@ SempClient.prototype.deleteAclProfileSubscribeException = function (vpn, exc) {
 	return this.deleteObject(vpn, 'aclProfiles', 
 		exc.aclProfileName+'/subscribeExceptions/'+exc.topicSyntax+','+encodeURIComponent(exc.subscribeExceptionTopic));
 }
-
 /**
  * Delete an existing Client-Profile entity from the server's named Msg-VPN.
  * @param {string} vpn - Msg-VPN name
@@ -536,6 +517,68 @@ SempClient.prototype.deleteAllTopicEndpoints = function (vpn) {
 		});
 }
 
+/**
+ * RECURSIVE METHODS
+ **/
+/**
+ * WARNING: DESTRUCTIVE!! This is a recursive message-VPN delete method. 
+ * Deletes a message-VPN after deleting all clients, profiles, queues configured in it.
+ *
+ * @param {string} vpn - message-VPN name as a string.
+ * @returns swagger-client Promise resulting from the last HTTP delete request.
+ **/
+SempClient.prototype.deleteMsgVpnAndAllEntities = function (vpn) {
+	return this.deleteAllQueues(vpn)
+		.then( (x) => {
+			return this.deleteAllTopicEndpoints(vpn)
+		}).then( (x) => {
+			return this.deleteAllClientUsernames(vpn)
+		}).then( (x) => {
+			return this.deleteAllClientProfiles(vpn)
+		}).then( (x) => {
+			return this.deleteAllAclProfiles(vpn)
+		}).then( (x) => {
+			const request = {
+				url    : this.urlBase(vpn),
+				method : 'DELETE',
+       				headers: this._gethdr
+			};
+			return Swagger.http(request);
+		});
+}
+
+/**
+ * Dumps all resources referenced by a named Msg-VPN into a map of 
+ * 	resource-url : resource-object
+ *
+ * @param {string} vpn - Msg-VPN to dump
+ * @returns Promise that resolves to an object containing the mapping
+ **/
+SempClient.prototype.dumpMsgVpn = function (vpnname) {
+	// global map of: uri=>obj
+	var world = {};
+	return Helper.collect( world, [ this.urlBase(vpnname) ], this._posthdr )
+		.then( (res) => {
+			return world;
+		});
+};
+
+/**
+ * Restoures all resources referenced by a msg-VPN dump object produced by 
+ * the dumpMsgVpn method above.
+ *
+ * @param {Object} vpn - Msg-VPN dump to restore
+ * @returns Promise that resolves to an object containing the results of the restore.
+ **/
+SempClient.prototype.restoreMsgVpn = function (vpn) {
+	var entries = [];
+	for ( var key of Object.keys(vpn) )  {
+		entries.push( { url: key , entity: vpn[key] } );
+	}
+	return Helper.postAll( entries, this._posthdr )
+		.then( (res) => {})
+		.catch( (err) => { console.log('ERR: ' + err); });
+}
 
 /*******************************************************************
  * EXPORTS

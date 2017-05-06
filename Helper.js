@@ -13,8 +13,8 @@ var Swagger = require('swagger-client');
  * @param {entity} entity string, e.g. 'clientUsernames', 'aclProfiles', 'clientProfiles', etc.
  * @return Promise resulting from Swagger.http() call.
  **/
-// function get(host, gethdr, vpn, entity) {
-var get = function (host, gethdr, vpn, entity) {
+function get(host, gethdr, vpn, entity) {
+// var get = function (host, gethdr, vpn, entity) {
 	var url = 'http://'+host+'/SEMP/v2/config/msgVpns';
 	if (vpn != null ) {
 		url += '/'+vpn;
@@ -37,8 +37,8 @@ var get = function (host, gethdr, vpn, entity) {
  * @param {entity} object to infer name from; different object types have differently-named name fields.
  * @return the name of the object as a string.
  **/
-// function inferName(entity) {
-var inferName = function(entity) {
+function inferName(entity) {
+// var inferName = function(entity) {
 	if (entity == null) {
 		console.log('Cannot find any name on NULL entity!');
 		return '';
@@ -61,8 +61,8 @@ var inferName = function(entity) {
  * @param {i} integer index of the item in the objects map to be deleted. Will be incremented on each call.
  * @return a resolved Promise after the last delete completes.
  **/
-// function deleteObjectsRec(objects, delhdr, i) {
-var deleteObjectsRec = function (objects, delhdr, i) {
+function deleteObjectsRec(objects, delhdr, i) {
+// var deleteObjectsRec = function (objects, delhdr, i) {
 	if (objects == null || objects.data == null) {
 		return Promise.resolve(null);
 	}
@@ -90,7 +90,7 @@ var deleteObjectsRec = function (objects, delhdr, i) {
 		});
 };
 
-var recursiveHttpRequest = function (url, hdr, op, exlist, i) {
+function recursiveHttpRequest (url, hdr, op, exlist, i) {
 	if (exlist == null || exlist.length == 0) {
 		return Promise.resolve(null);
 	}
@@ -113,17 +113,100 @@ var recursiveHttpRequest = function (url, hdr, op, exlist, i) {
 		});
 };
 
-var prettyprint = function (obj) {
-	console.log('\n\n');
+function collect (objects, links, HDR) {
+	if ( nullOrEmpty(links) ) return Promise.resolve(null);
+	var req = {
+		url    : links.splice(0,1)[0],
+		method : 'GET',
+       		headers: HDR
+	};
+	return Swagger.http(req)
+		.then( (res) => {
+			if ( !nullOrEmpty(res.body.data) ) {
+				// do this to normalize scalar data|links objects and array data|links objects
+				var items = [].concat( res.body.data );
+				var sublinks= [].concat( res.body.links );
+				for( var i = 0; i < sublinks.length; i++) {
+					var item= items[i];
+					var sls = sublinks[i];
+					// sls.uri is special, it s the link to this item, 
+					// so use it for mapping but don't recurse it
+					var olink = sls.uri;
+					delete sls.uri;
+					// store this data item in our global map
+					objects[olink] = item;
+					// add values from sub-links map to the list 
+					// of links we are recursing over
+					links = links.concat( values(sls) );
+				}
+			}
+			return collect(objects, links, HDR)
+				.then( (next) => {
+					if (next == null) return res;
+					else return next;
+				});
+		});
+}
+
+function nullOrEmpty (obj) {
+	if (obj == null) return true;
+	else if (obj instanceof Array)
+		return obj.length == 0;
+	return Object.keys(obj).length == 0;
+}
+
+function values (d) {
+	var keys = Object.keys(d);
+	return keys.map(function(v) { return d[v]; });
+}
+
+function prettyprint (obj) {
 	console.log(JSON.stringify(obj, null, 2));
 	console.log('\n\n');
 }
 
+function stubify (url) {
+	return url.match(/(.+)\/[^\/]+$/)[1];
+}
+
+function postAll( entries, hdr ) {
+	if ( nullOrEmpty(entries) ) return Promise.resolve(null);
+	var entry = entries.splice(0,1)[0];
+	var stub = stubify( entry.url );
+	console.log('Processing URL: ' + entry.url);
+	console.log('Processing URL: ' + stub);
+	var req = {
+		url    : stub,
+		method : 'POST',
+       		headers: hdr,
+		body: JSON.stringify(entry.entity)
+	};
+	return Swagger.http(req)
+		.then( (res) => {
+			return postAll( entries, hdr )
+				.then( (next) => {
+					if (next == null) return res;
+					else return next;
+				});
+		})
+		.catch( (err) => {
+			console.log('ERR: ' + err);
+			return postAll( entries, hdr )
+				.then( (next) => {
+					if (next == null) return res;
+					else return next;
+				});
+		});
+}
+
 module.exports = 
 {
-	get: get,
-	deleteObjectsRec: deleteObjectsRec,
+	get                  : get,
+	deleteObjectsRec     : deleteObjectsRec,
 	recursiveHttpRequest : recursiveHttpRequest,
-	inferName: inferName,
-	prettyprint : prettyprint
+	postAll              : postAll,
+	stubify              : stubify,
+	collect              : collect,
+	inferName            : inferName,
+	prettyprint          : prettyprint
 };
