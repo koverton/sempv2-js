@@ -10,7 +10,7 @@ including:
 * Durable Topic Endpoints
 * Client Usernames
 * Client Profiles
-* ACL Profiles (partially, see TODO below)
+* ACL Profiles
 
 It is a dynamic library that converts all data transfers back and forth between 
 JSON and Javascript objects. It does not make use of any of Swagger code-generation.
@@ -54,6 +54,22 @@ client.createMsgVpn(vpnname)
 	.catch( (err) => { console.log('ERR: ' + err); });
 ```
 
+## Bulk Operations
+
+There are three basic bulk/recursive operations you may be interested in from this library, their common usage has elevated them into their own scripts in the `tools/` directory:
+
+* `tools/dump.js <host+port> <user> <password> <vpn>` outputs an entire message-VPN and all entities to a JSON dictionary mapping URL->entity.
+* `tools/restore.js <host+port> <user> <password> <vpn-dump-json-file>` restores an entire message-VPN and all entities from a previously dumped JSON file.
+* `tools/destroy.js <host+port> <user> <password> <vpn>` destroys an existing message-VPN and all entities under it
+
+These scripts correspond to the following functions:
+
+* `SempClient.dumpMsgVpn( vpnname )`
+* `SempClient.restoreMsgVpn( vpndump )`
+* `SempClient.deleteMsgVpnAndAllEntities( vpnname )`
+
+## Samples
+
 There are more sample scripts in the `samples/` directory:
 * `samples/1-create-vpn.js`
 Sample script to create a basic message-VPN with all default settings.
@@ -73,10 +89,6 @@ Since this is an initial version, it does not yet manage the following entity ty
 * Bridges
 * LDAP Authorization Groups
 * REST Delivery Points
-
-ACL-Profiles are more deeply-structured than most other entities including nested 
-entities for each of connect, publish and subscribe rules. Only basic create/delete 
-operations work at this time.
 
 ## Dependencies
 
