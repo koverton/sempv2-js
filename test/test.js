@@ -1,6 +1,7 @@
 'use strict';
 var expect = require('chai').expect;
 var semp = require('../index');
+var fs = require('fs')
 
 ////////////////////////////////////////
 ///  MODIFY THESE TO YOUR SOLACE ENV ///
@@ -270,3 +271,23 @@ describe('#SempClient.deleteMsgVpnAndAllEntities', function() {
 			});
 	});
 });
+
+describe('#SempClient.restoreMsgVpn', function() {
+	it('should restore a valid msgvpn from a dump file', function() {
+		var sc = new semp.SempClient(TESTHOST, TESTUSER, TESTPASS);
+	
+		fs.readFile('vpn.json', 'utf8', function (err,data) {
+			if (err) { return console.log(err); }
+			var vpn = JSON.parse(data);
+			var vmr = new semp.SempClient(host, user, pass);
+			vmr.restoreMsgVpn( vpn )
+				.then( (x) => {
+					return sc.deleteMsgVpnAndAllEntities('jimmy_vpn')
+				})
+				.then( (x) => {
+					expect(x.ok).to.equal(true);
+				});
+		});
+	});
+});
+
