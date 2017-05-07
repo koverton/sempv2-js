@@ -169,15 +169,20 @@ function stubify (url) {
 	return url.match(/(.+)\/[^\/]+$/)[1];
 }
 
-function postAll( entries, hdr ) {
+function postAll( entries, hdr, methOver ) {
 	if ( nullOrEmpty(entries) ) return Promise.resolve(null);
 	var entry = entries.splice(0,1)[0];
-	var stub = stubify( entry.url );
+	var url = stubify( entry.url );
 	console.log('Processing URL: ' + entry.url);
-	console.log('Processing URL: ' + stub);
+	var meth = 'POST';
+	if (methOver != null) {
+		meth = methOver;
+		url = entry.url;
+	}
+	console.log(meth + 'ing URL: ' + url);
 	var req = {
-		url    : stub,
-		method : 'POST',
+		url    : url,
+		method : meth,
        		headers: hdr,
 		body: JSON.stringify(entry.entity)
 	};
@@ -191,7 +196,13 @@ function postAll( entries, hdr ) {
 		})
 		.catch( (err) => {
 			console.log('ERR: ' + err);
-			return postAll( entries, hdr )
+			// Only retry once, otherwise can infinitely fail
+			var retryMeth = null;
+			if (methOver == null) {
+				entries.unshift( entry );
+				retryMeth = 'PUT';
+			}
+			return postAll( entries, hdr, retryMeth )
 				.then( (next) => {
 					if (next == null) return res;
 					else return next;

@@ -1,7 +1,7 @@
 var semp = require('sempv2-js');
 var fs = require('fs')
 
-if (process.argv.length < 5) {
+if (process.argv.length < 6) {
 	console.log('\n\n\tUSAGE: ' + process.argv[1] + ' <host+port> <adminuser> <admin-password> <vpnname>\n\n');
 	process.exit(1);
 }

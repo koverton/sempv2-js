@@ -564,7 +564,7 @@ SempClient.prototype.dumpMsgVpn = function (vpnname) {
 };
 
 /**
- * Restoures all resources referenced by a msg-VPN dump object produced by 
+ * Restores all resources referenced by a msg-VPN dump object produced by 
  * the dumpMsgVpn method above.
  *
  * @param {Object} vpn - Msg-VPN dump to restore
