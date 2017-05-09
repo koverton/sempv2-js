@@ -1,3 +1,5 @@
+#!/usr/local/bin/node
+
 var semp = require('sempv2-js');
 
 if (process.argv.length < 6) {
