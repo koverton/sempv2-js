@@ -1,6 +1,7 @@
 # sempv2-js
 
-This is a Javascript SEMPv2 client for the Solace messaging management API. 
+This is a Javascript SEMPv2 client for the Solace messaging management API 
+that can be run under Node.js to manage Solace message routers. 
 SEMPv2 is a Swagger API allows you to connect to any Solace message-router 
 (version 7.2 or greater) and do standard CRUD operations on Solace entities 
 including:
